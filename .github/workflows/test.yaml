@@ -47,11 +47,20 @@ jobs:
       flavor: ${{ matrix.flavor }}
       type: ${{ matrix.type }}
       runsOn: uds-swf-ubuntu-big-boy-8-core
-    secrets: inherit  # Inherits all secrets from the parent workflow.
+    secrets: inherit # Inherits all secrets from the parent workflow.
 
   verify-test:
     runs-on: ubuntu-latest
     needs: validate
+    if: always()
     steps:
-      - name: Success
-        run: echo "All tests passed successfully!"
+      - name: Check validate result
+        run: |
+          echo "validate result: ${{ needs.validate.result }}"
+
+          if [ "${{ needs.validate.result }}" != "success" ]; then
+            echo "One or more tests failed."
+            exit 1
+          fi
+
+          echo "All tests passed successfully!"
