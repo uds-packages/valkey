@@ -1,12 +1,9 @@
 # 🏭 UDS Valkey Package
 
 [<img alt="Made for UDS" src="https://raw.githubusercontent.com/defenseunicorns/uds-common/refs/heads/main/docs/assets/made-for-uds-silver.svg" height="20px"/>](https://github.com/defenseunicorns/uds-core)
-[![Latest Release](https://img.shields.io/github/v/release/defenseunicorns/uds-package-valkey)](https://github.com/defenseunicorns/uds-package-valkey/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/defenseunicorns/uds-package-valkey/release.yaml)](https://github.com/defenseunicorns/uds-package-valkey/actions/workflows/release.yaml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-valkey/badge)](https://api.securityscorecards.dev/projects/github.com/defenseunicorns/uds-package-valkey)
 
 > [!TIP]  
-> `uds-package-valkey` is intended to be a single-tenant application for one consumer (i.e. [`uds-package-gitlab`](https://github.com/defenseunicorns/uds-package-gitlab)).  If you have more than one consumer, deploy a second Valkey instance using `namespace` overrides in your UDS bundle.
+> `uds-package-valkey` is intended to be a single-tenant application for one consumer (i.e. [`uds-package-gitlab`](https://github.com/uds-packages/gitlab)).  If you have more than one consumer, deploy a second Valkey instance using `namespace` overrides in your UDS bundle.
 
 This package is designed for use as part of a [UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory) bundle deployed on [UDS Core](https://github.com/defenseunicorns/uds-core).
 
@@ -18,7 +15,7 @@ This package requires a Kubernetes Cluster providing a Storage Class that has [U
 
 ## Releases
 
-The released packages can be found in [ghcr](https://github.com/defenseunicorns/uds-package-valkey/pkgs/container/packages%2Fuds%valkey).
+The released packages can be found in [ghcr](https://github.com/uds-packages/valkey/pkgs/container/valkey).
 
 ## UDS Tasks (for local dev and CI)
 
