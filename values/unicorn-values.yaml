@@ -16,4 +16,4 @@ metrics:
   image:
     registry: quay.io
     repository: rfcurated/redis-exporter
-    tag: 1.80.1-jammy-scratch-bnt-fips-rfcurated
+    tag: 1.80.2-jammy-scratch-bnt-fips-rfcurated
