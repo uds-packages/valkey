@@ -42,5 +42,5 @@ components:
           - ./values/unicorn-values.yaml
     images:
       - quay.io/rfcurated/valkey/valkey:8.1.5-jammy-fips-rfcurated
-      - quay.io/rfcurated/redis-exporter:1.80.1-jammy-scratch-bnt-fips-rfcurated
+      - quay.io/rfcurated/redis-exporter:1.80.2-jammy-scratch-bnt-fips-rfcurated
       - quay.io/rfcurated/valkey-sentinel:8.1.5-jammy-bnt-fips-rfcurated
