@@ -17,4 +17,4 @@ Relates to #
 ## Checklist before merging
 
 - [ ] Test, docs, adr added or updated as needed
-- [ ] [Contributor Guide Steps](https://github.com/defenseunicorns/uds-package-valkey/blob/main/CONTRIBUTING.md#developer-workflow) followed
+- [ ] [Contributor Guide Steps](https://github.com/uds-packages/valkey/blob/main/CONTRIBUTING.md#developer-workflow) followed
