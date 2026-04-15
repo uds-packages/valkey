@@ -15,8 +15,8 @@ components:
       onDeploy:
         after:
           - cmd: |
-              svc=$(kubectl get svc valkey-primary -n valkey --ignore-not-found 2>/dev/null | grep -q . && echo valkey-primary || echo valkey)
-              password=$(kubectl get secret valkey-password -n valkey -o go-template='{{index .data "valkey-password" | base64decode}}')
+              svc=$(./zarf tools kubectl get svc valkey-primary -n valkey --ignore-not-found 2>/dev/null | grep -q . && echo valkey-primary || echo valkey)
+              password=$(./zarf tools kubectl get secret valkey-password -n valkey -o go-template='{{index .data "valkey-password" | base64decode}}')
               printf 'redis://:%s@%s.valkey.svc.cluster.local:6379' "$password" "$svc"
             description: "Read Valkey password and set REDIS_URI"
             mute: true
