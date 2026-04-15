@@ -11,6 +11,8 @@ packages:
   - name: valkey
     path: ../
     ref: dev
+    optionalComponents:
+      - valkey-redis-uri-output
     overrides:
       valkey:
         uds-valkey-config:
@@ -47,8 +49,6 @@ packages:
   - name: valkey
     path: ../
     ref: dev
-    optionalComponents:
-      - valkey-redis-uri-output
     overrides:
       valkey:
         uds-valkey-config:
