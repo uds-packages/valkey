@@ -44,3 +44,8 @@ components:
       - quay.io/rfcurated/valkey/valkey:8.1.6-jammy-fips-rfcurated
       - quay.io/rfcurated/redis-exporter:1.81.0-jammy-scratch-bnt-fips-rfcurated
       - quay.io/rfcurated/valkey-sentinel:8.1.6-jammy-bnt-fips-rfcurated
+
+  - name: valkey-redis-uri-output
+    required: false
+    import:
+      path: common

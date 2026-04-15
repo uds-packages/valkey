@@ -8,6 +8,22 @@ metadata:
   url: https://github.com/valkey-io/valkey
 
 components:
+  - name: valkey-redis-uri-output
+    description: "Reads the Valkey password secret and sets REDIS_URI as a Zarf variable"
+    required: false
+    actions:
+      onDeploy:
+        after:
+          - cmd: |
+              svc=$(kubectl get svc valkey-primary -n valkey --ignore-not-found 2>/dev/null | grep -q . && echo valkey-primary || echo valkey)
+              password=$(kubectl get secret valkey-password -n valkey -o go-template='{{index .data "valkey-password" | base64decode}}')
+              printf 'redis://:%s@%s.valkey.svc.cluster.local:6379' "$password" "$svc"
+            description: "Read Valkey password and set REDIS_URI"
+            mute: true
+            setVariables:
+              - name: REDIS_URI
+                sensitive: true
+
   - name: valkey
     required: true
     charts:
