@@ -43,6 +43,7 @@ jobs:
         flavor: [upstream, unicorn]
     uses: defenseunicorns/uds-common/.github/workflows/callable-test.yaml@1614a9f51fbf1f21e7a28020702773d9bdefd8fe # v1.24.5
     with:
+      options: --set BASE_REPO="ghcr.io/uds-packages"
       upgrade-flavors: ${{ needs.check-flavor.outputs.upgrade-flavors }}
       flavor: ${{ matrix.flavor }}
       type: ${{ matrix.type }}
