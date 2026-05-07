@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
 
 image:
-  registry: quay.io
-  repository: rfcurated/valkey/valkey
-  tag: 8.1.6-jammy-fips-rfcurated
+  registry: cgr.dev
+  repository: defenseunicorns.com/valkey-iamguarded
+  tag: 8.1.7
 
 sentinel:
   image:  # Unicorn flavor option DNE
-    registry: quay.io
-    repository: rfcurated/valkey-sentinel
-    tag: 8.1.6-jammy-bnt-fips-rfcurated
+    registry: cgr.dev
+    repository: defenseunicorns.com/valkey-sentinel-iamguarded
+    tag: 8.1.7
 
 metrics:
   image:
-    registry: quay.io
-    repository: rfcurated/redis-exporter
-    tag: 1.82.0-jammy-scratch-bnt-fips-rfcurated
+    registry: cgr.dev
+    repository: defenseunicorns.com/prometheus-redis-exporter-iamguarded
+    tag: 1.83.0
