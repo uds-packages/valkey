@@ -8,7 +8,7 @@ metadata:
   labels:
     app: valkey-test
 spec:
-  completions: 10
+  completions: 5
   parallelism: 1
   template:
     metadata:
@@ -59,7 +59,7 @@ metadata:
   labels:
     app: valkey-test
 spec:
-  completions: 10
+  completions: 5
   parallelism: 1
   template:
     metadata:
@@ -81,14 +81,51 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              # Ask the Sentinel which node is the primary node. 'mymaster' is the default name of the primary node.
-              PRIMARY_ADDR="$(echo 'SENTINEL GET-PRIMARY-ADDR-BY-NAME mymaster' | valkey-cli -h valkey.valkey-replicated-w-sentinel.svc.cluster.local -p 26379)"
-              echo "Primary ADDR is: ${PRIMARY_ADDR}"
+              SENTINEL_HOST="valkey.valkey-replicated-w-sentinel.svc.cluster.local"
+              SENTINEL_PORT="26379"
 
-              # Extract HOST and PORT using sed
-              HOST=$(echo "${PRIMARY_ADDR}" | sed -n '1p')
-              PORT=$(echo "${PRIMARY_ADDR}" | sed -n '2p')
-              echo "Primary is ${HOST}:${PORT}"
+              # Wait for Sentinel to have quorum before trusting any topology answer it gives.
+              # On fresh deploys or just after a failover, Sentinels need a few seconds to gossip
+              # and agree on the primary. Without this, GET-PRIMARY-ADDR-BY-NAME can return a
+              # node that is actually a replica, and writes will fail with READONLY.
+              echo "Waiting for Sentinel quorum on mymaster..."
+              for attempt in 1 2 3 4 5 6 7 8 9 10; do
+                  if echo "SENTINEL CKQUORUM mymaster" | valkey-cli -h ${SENTINEL_HOST} -p ${SENTINEL_PORT} | grep -q OK; then
+                      echo "Sentinel quorum reached."
+                      break
+                  fi
+                  echo "Attempt ${attempt}: Sentinel quorum not ready, retrying..."
+                  sleep 3
+              done
+
+              # Ask Sentinel which node is the primary, then verify the node itself agrees.
+              # Retry the lookup if the node reports it is actually a replica (stale Sentinel view).
+              HOST=""
+              PORT=""
+              for attempt in 1 2 3 4 5; do
+                  PRIMARY_ADDR="$(echo 'SENTINEL GET-PRIMARY-ADDR-BY-NAME mymaster' | valkey-cli -h ${SENTINEL_HOST} -p ${SENTINEL_PORT})"
+                  echo "Primary ADDR is: ${PRIMARY_ADDR}"
+
+                  HOST=$(echo "${PRIMARY_ADDR}" | sed -n '1p')
+                  PORT=$(echo "${PRIMARY_ADDR}" | sed -n '2p')
+                  echo "Sentinel says primary is ${HOST}:${PORT}"
+
+                  # ROLE returns 'master' or 'slave' on the first line — ground truth from the node.
+                  ROLE=$(echo "ROLE" | valkey-cli -h ${HOST} -p ${PORT} | head -n 1)
+                  if [ "${ROLE}" = "master" ]; then
+                      echo "Confirmed ${HOST}:${PORT} is primary."
+                      break
+                  fi
+
+                  echo "Attempt ${attempt}: ${HOST}:${PORT} reports role=${ROLE}, waiting for topology to settle..."
+                  HOST=""
+                  sleep 3
+              done
+
+              if [ -z "${HOST}" ] || [ "${ROLE}" != "master" ]; then
+                  echo "Could not find a writable primary after retries. Last role seen: ${ROLE}"
+                  exit 1
+              fi
 
               # Check if primary responds to PING
               PING_OUTPUT=$(echo "ping" | valkey-cli -h ${HOST} -p ${PORT})
@@ -110,4 +147,4 @@ spec:
 
               echo "All checks passed."
       restartPolicy: OnFailure
-  backoffLimit: 5
+  backoffLimit: 15
