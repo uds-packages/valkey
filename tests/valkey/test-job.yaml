@@ -83,7 +83,7 @@ spec:
             - |
               SENTINEL_HOST="valkey.valkey-replicated-w-sentinel.svc.cluster.local"
               SENTINEL_PORT="26379"
-            
+
               # Wait for Sentinel to have quorum before trusting any topology answer it gives.
               # On fresh deploys or just after a failover, Sentinels need a few seconds to gossip
               # and agree on the primary. Without this, GET-PRIMARY-ADDR-BY-NAME can return a
