@@ -8,7 +8,7 @@ metadata:
   labels:
     app: valkey-test
 spec:
-  completions: 5
+  completions: 10
   parallelism: 1
   template:
     metadata:
@@ -59,7 +59,7 @@ metadata:
   labels:
     app: valkey-test
 spec:
-  completions: 5
+  completions: 10
   parallelism: 1
   template:
     metadata:
@@ -83,7 +83,7 @@ spec:
             - |
               SENTINEL_HOST="valkey.valkey-replicated-w-sentinel.svc.cluster.local"
               SENTINEL_PORT="26379"
-
+            
               # Wait for Sentinel to have quorum before trusting any topology answer it gives.
               # On fresh deploys or just after a failover, Sentinels need a few seconds to gossip
               # and agree on the primary. Without this, GET-PRIMARY-ADDR-BY-NAME can return a
@@ -108,16 +108,16 @@ spec:
 
                   HOST=$(echo "${PRIMARY_ADDR}" | sed -n '1p')
                   PORT=$(echo "${PRIMARY_ADDR}" | sed -n '2p')
-                  echo "Sentinel says primary is ${HOST}:${PORT}"
+                  echo "Primary is ${HOST}:${PORT}"
 
-                  # ROLE returns 'master' or 'slave' on the first line — ground truth from the node.
+                  # ROLE returns 'master' or 'slave'.
                   ROLE=$(echo "ROLE" | valkey-cli -h ${HOST} -p ${PORT} | head -n 1)
                   if [ "${ROLE}" = "master" ]; then
                       echo "Confirmed ${HOST}:${PORT} is primary."
                       break
                   fi
 
-                  echo "Attempt ${attempt}: ${HOST}:${PORT} reports role=${ROLE}, waiting for topology to settle..."
+                  echo "Attempt ${attempt}: ${HOST}:${PORT} reports role=${ROLE}"
                   HOST=""
                   sleep 3
               done
@@ -147,4 +147,4 @@ spec:
 
               echo "All checks passed."
       restartPolicy: OnFailure
-  backoffLimit: 15
+  backoffLimit: 5
