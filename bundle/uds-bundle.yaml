@@ -93,12 +93,6 @@ packages:
               value: 2000
             - path: sentinel.failoverTimeout
               value: 18000
-            - path: sentinel.replica.persistentVolumeClaimRetentionPolicy.enabled
-              value: true
-            - path: sentinel.replica.persistentVolumeClaimRetentionPolicy.whenScaled
-              value: Delete
-            - path: sentinel.replica.persistentVolumeClaimRetentionPolicy.whenDeleted
-              value: Delete
           variables:
             - name: VALKEY_RESOURCES
               path: "primary.resources"
