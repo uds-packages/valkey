@@ -48,7 +48,7 @@ spec:
 
               echo "All checks passed."
       restartPolicy: OnFailure
-  backoffLimit: 5
+  backoffLimit: 15
 ---
 # Copyright 2024 Defense Unicorns
 # SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
@@ -147,4 +147,4 @@ spec:
 
               echo "All checks passed."
       restartPolicy: OnFailure
-  backoffLimit: 5
+  backoffLimit: 15
