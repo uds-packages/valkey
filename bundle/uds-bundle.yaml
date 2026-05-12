@@ -87,12 +87,6 @@ packages:
               value: replication
             - path: sentinel.enabled  # https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml#L1143
               value: true
-            - path: sentinel.automateClusterRecovery
-              value: true
-            - path: sentinel.downAfterMilliseconds
-              value: 2000
-            - path: sentinel.failoverTimeout
-              value: 18000
           variables:
             - name: VALKEY_RESOURCES
               path: "primary.resources"
