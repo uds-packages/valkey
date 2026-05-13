@@ -12,3 +12,6 @@ metrics:
 
 sentinel:
   primarySet: mymaster
+  automateClusterRecovery: true
+  downAfterMilliseconds: 2000
+  failoverTimeout: 18000
