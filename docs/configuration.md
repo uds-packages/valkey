@@ -4,7 +4,7 @@ Valkey configured through the upstream [Bitnami Valkey chart](https://github.com
 
 ## Networking
 
-Network policies are controlled via the `uds-valkey-config` chart and follow [similar networking patterns as the Reference Package](https://github.com/uds-packages/reference-package/blob/main/chart/templates/uds-package.yaml).  Because Valkey does not interact with external resources like databases or object storage it only implements `additionalNetworkAllow` networking for the `valkey` namespace:
+Network policies are controlled via the `uds-valkey-config` chart and follow [similar networking patterns as the Reference Package](https://github.com/uds-packages/reference-package/blob/main/docs/networking-patterns.md).  Because Valkey does not interact with external resources like databases or object storage it only implements `additionalNetworkAllow` networking for the `valkey` namespace:
 
 - `additionalNetworkAllow`: sets custom network policies for the `valkey` namespace (i.e. to allow clients like GitLab to connect)
 
