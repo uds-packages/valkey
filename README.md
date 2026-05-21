@@ -1,20 +1,18 @@
-# 🏭 UDS Valkey Package
+# UDS Valkey Package
 
-[<img alt="Made for UDS" src="https://raw.githubusercontent.com/defenseunicorns/uds-common/refs/heads/main/docs/assets/made-for-uds-silver.svg" height="20px"/>](https://github.com/defenseunicorns/uds-core)
 [![Latest Release](https://img.shields.io/github/v/release/uds-packages/valkey)](https://github.com/uds-packages/valkey/releases)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/uds-packages/valkey/release.yaml)](https://github.com/uds-packages/valkey/actions/workflows/release.yaml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/uds-packages/valkey/badge)](https://api.securityscorecards.dev/projects/github.com/uds-packages/valkey)
 
 > [!TIP]  
 > `uds-package-valkey` is intended to be a single-tenant application for one consumer (i.e. [`uds-package-gitlab`](https://github.com/uds-packages/gitlab)).  If you have more than one consumer, deploy a second Valkey instance using `namespace` overrides in your UDS bundle.
 
-This package is designed for use as part of a [UDS Software Factory](https://github.com/defenseunicorns/uds-software-factory) bundle deployed on [UDS Core](https://github.com/defenseunicorns/uds-core).
+This package is designed for use as part of a [UDS Bundle](https://docs.defenseunicorns.com/core/concepts/configuration--packaging/bundles/) deployed on [UDS Core](https://github.com/defenseunicorns/uds-core).
 
 > Valkey is a high-performance, in-memory data store that offers a flexible and scalable solution for caching, message queuing, and primary database needs. It supports a wide range of data structures and can be deployed as a standalone daemon or in a cluster for high availability.
 
 ## Prerequisites
 
-This package requires a Kubernetes Cluster providing a Storage Class that has [UDS Core](https://github.com/defenseunicorns/uds-core) installed into it.  You can learn more about configuring this package in the [configuration documentation](./docs/configuration.md)
+This package requires a Kubernetes Cluster providing a Storage Class that has [UDS Core](https://github.com/defenseunicorns/uds-core) installed into it. You can learn more about configuring this package in the [configuration documentation](./docs/configuration.md)
 
 ## Releases
 
