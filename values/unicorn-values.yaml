@@ -4,13 +4,13 @@
 image:
   registry: cgr.dev
   repository: defenseunicorns.com/valkey-iamguarded
-  tag: v8.1.8
+  tag: v9.1.0
 
 sentinel:
   image:  # Unicorn flavor option DNE
     registry: cgr.dev
     repository: defenseunicorns.com/valkey-sentinel-iamguarded
-    tag: v8.1.8
+    tag: v9.1.0
 
 metrics:
   image:
