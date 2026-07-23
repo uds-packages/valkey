@@ -41,7 +41,7 @@ components:
         valuesFiles:
           - ./values/unicorn-values.yaml
     images:
-      - cgr.dev/defenseunicorns.com/valkey-iamguarded:v8.1.8
+      - cgr.dev/defenseunicorns.com/valkey-iamguarded:v8.1.9
       - cgr.dev/defenseunicorns.com/prometheus-redis-exporter-iamguarded:v1.87.0
       - cgr.dev/defenseunicorns.com/valkey-sentinel-iamguarded:v8.1.9
 
