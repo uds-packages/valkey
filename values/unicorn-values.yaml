@@ -4,7 +4,7 @@
 image:
   registry: cgr.dev
   repository: defenseunicorns.com/valkey-iamguarded
-  tag: v8.1.8
+  tag: v8.1.9
 
 sentinel:
   image:  # Unicorn flavor option DNE
@@ -16,4 +16,4 @@ metrics:
   image:
     registry: cgr.dev
     repository: defenseunicorns.com/prometheus-redis-exporter-iamguarded
-    tag: v1.87.0
+    tag: v1.88.0
