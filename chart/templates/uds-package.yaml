@@ -22,22 +22,7 @@ spec:
       - direction: Egress
         remoteGenerated: IntraNamespace
 
-      # Custom rules to allow clients to connect
-    {{- range .Values.additionalNetworkAllow }}
-      - direction: {{ .direction }}
-        {{- if .selector }}
-        selector:
-          {{ .selector | toYaml | nindent 10 }}
-        {{- end }}
-        {{- if not .remoteGenerated }}
-        remoteNamespace: {{ .remoteNamespace }}
-        {{- if .remoteSelector }}
-        remoteSelector:
-          {{ .remoteSelector | toYaml | nindent 10 }}
-        {{- end }}
-        port: {{ .port }}
-        {{- else }}
-        remoteGenerated: {{ .remoteGenerated }}
-        {{- end }}
-        description: {{ .description }}
-    {{- end }}
+      # Custom rules for additional networking access
+      {{- with .Values.additionalNetworkAllow }}
+      {{ toYaml . | nindent 6 }}
+      {{- end }}
