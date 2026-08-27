@@ -1,0 +1,8 @@
+# Copyright 2026 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
+# Structured deploy-time overrides for the package's local configuration and
+# upstream Valkey charts. Package-managed images, authentication, network
+# services, security contexts, and injected workloads are excluded.
+uds-valkey-config: {}
+valkey: {}
