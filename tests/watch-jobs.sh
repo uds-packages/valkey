@@ -51,6 +51,7 @@ while [[ -n "${JOBS}" ]]; do
   # Break the loop if all jobs are completed
   if [[ -z "${JOBS}" ]]; then
     echo "All jobs completed successfully."
+    exit 0
   fi
 
   # Wait before the next check

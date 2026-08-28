@@ -2,6 +2,23 @@
 
 Valkey configured through the upstream [Bitnami Valkey chart](https://github.com/bitnami/charts/tree/main/bitnami/valkey) as well as a UDS configuration chart that supports the following:
 
+## Zarf Values
+
+This package supports deploy-time [Zarf Values](https://docs.defenseunicorns.com/core/concepts/configuration--packaging/package-values/). Supply a values file with `uds zarf package deploy --values <file>` or individual settings with `--set-values`.
+
+Use `uds-valkey-config` for the local UDS configuration chart (mesh mode, network-policy rules, cross-namespace password copy, and replicated-node network resources) and `valkey` for supported upstream Valkey settings such as architecture, persistence, resources, scheduling, and TLS Secret references. Values are merged over the package and flavor defaults; existing UDS bundle overrides continue to work.
+
+Package-managed images, workload security, injected containers, network services, and authentication are intentionally unavailable. Valkey continues to use the package-generated `valkey-password` Secret so the `copyPassword` and optional `REDIS_URI` component stay reliable.
+
+```yaml
+uds-valkey-config:
+  replicas: 3
+valkey:
+  architecture: replication
+  sentinel:
+    enabled: true
+```
+
 ## Networking
 
 Network policies are controlled via the `uds-valkey-config` chart and follow [similar networking patterns as the Reference Package](https://github.com/uds-packages/reference-package/blob/main/docs/networking-patterns.md).  Because Valkey does not interact with external resources like databases or object storage it only implements `additionalNetworkAllow` networking for the `valkey` namespace:
