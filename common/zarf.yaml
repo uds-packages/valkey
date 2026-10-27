@@ -35,7 +35,7 @@ components:
           - sourcePath: .uds-valkey-config
             targetPath: .
       - name: valkey
-        version: 4.0.2
+        version: 4.0.3
         namespace: valkey
         url: oci://ghcr.io/defenseunicorns/bitferno/valkey
         valuesFiles:
