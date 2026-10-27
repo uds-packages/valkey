@@ -101,7 +101,7 @@
         "replicas": {
           "description": "Number of replicated Valkey nodes for which the UDS chart creates mesh resources.",
           "minimum": 0,
-          "type": "integer"
+          "type": "number"
         }
       },
       "type": "object"
@@ -144,11 +144,24 @@
         "global": {
           "additionalProperties": false,
           "properties": {
+            "compatibility": {
+              "properties": {
+                "openshift": {
+                  "properties": {},
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
             "defaultStorageClass": {
               "type": "string"
             },
             "storageClass": {
               "type": "string"
+            },
+            "valkey": {
+              "properties": {},
+              "type": "object"
             }
           },
           "type": "object"
@@ -177,6 +190,15 @@
             "extraArgs": {
               "properties": {},
               "type": "object"
+            },
+            "extraEnvVars": {
+              "type": "array"
+            },
+            "extraVolumeMounts": {
+              "type": "array"
+            },
+            "extraVolumes": {
+              "type": "array"
             },
             "livenessProbe": {
               "properties": {
@@ -437,7 +459,22 @@
             "enableServiceLinks": {
               "type": "boolean"
             },
+            "extraEnvVars": {
+              "type": "array"
+            },
+            "extraEnvVarsCM": {
+              "type": "string"
+            },
+            "extraEnvVarsSecret": {
+              "type": "string"
+            },
             "extraFlags": {
+              "type": "array"
+            },
+            "extraVolumeMounts": {
+              "type": "array"
+            },
+            "extraVolumes": {
               "type": "array"
             },
             "hostAliases": {
@@ -621,7 +658,7 @@
             },
             "replicaCount": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "resources": {
               "properties": {},
@@ -805,7 +842,22 @@
               },
               "type": "object"
             },
+            "extraEnvVars": {
+              "type": "array"
+            },
+            "extraEnvVarsCM": {
+              "type": "string"
+            },
+            "extraEnvVarsSecret": {
+              "type": "string"
+            },
             "extraFlags": {
+              "type": "array"
+            },
+            "extraVolumeMounts": {
+              "type": "array"
+            },
+            "extraVolumes": {
               "type": "array"
             },
             "hostAliases": {
@@ -992,7 +1044,7 @@
             },
             "replicaCount": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "resources": {
               "properties": {},
@@ -1099,7 +1151,7 @@
             },
             "downAfterMilliseconds": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "enableServiceLinks": {
               "type": "boolean"
@@ -1118,14 +1170,29 @@
                 "port": {
                   "maximum": 65535,
                   "minimum": 1,
-                  "type": "integer"
+                  "type": "number"
                 }
               },
               "type": "object"
             },
+            "extraEnvVars": {
+              "type": "array"
+            },
+            "extraEnvVarsCM": {
+              "type": "string"
+            },
+            "extraEnvVarsSecret": {
+              "type": "string"
+            },
+            "extraVolumeMounts": {
+              "type": "array"
+            },
+            "extraVolumes": {
+              "type": "array"
+            },
             "failoverTimeout": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "getPrimaryTimeout": {
               "type": "number"
@@ -1159,7 +1226,7 @@
             },
             "parallelSyncs": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "persistence": {
               "properties": {
@@ -1225,7 +1292,7 @@
             },
             "quorum": {
               "minimum": 1,
-              "type": "integer"
+              "type": "number"
             },
             "readinessProbe": {
               "properties": {
