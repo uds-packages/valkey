@@ -31,9 +31,67 @@ components:
         namespace: valkey
         version: 0.1.0
         localPath: ../chart
+        values:
+          - sourcePath: .uds-valkey-config
+            targetPath: .
       - name: valkey
         version: 4.0.3
         namespace: valkey
         url: oci://ghcr.io/defenseunicorns/bitferno/valkey
         valuesFiles:
           - ../values/values.yaml
+        values:
+          - sourcePath: .valkey
+            targetPath: .
+            excludePaths:
+              - .valkey.auth
+              - .valkey.global.imageRegistry
+              - .valkey.global.imagePullSecrets
+              - .valkey.global.security
+              - .valkey.global.valkey.password
+              - .valkey.global.compatibility.openshift.adaptSecurityContext
+              - .valkey.diagnosticMode
+              - .valkey.extraDeploy
+              - .valkey.image
+              - .valkey.networkPolicy
+              - .valkey.podSecurityPolicy
+              - .valkey.rbac
+              - .valkey.serviceAccount
+              - .valkey.serviceBindings
+              - .valkey.primary.args
+              - .valkey.primary.automountServiceAccountToken
+              - .valkey.primary.command
+              - .valkey.primary.containerPorts
+              - .valkey.primary.podSecurityContext
+              - .valkey.primary.containerSecurityContext
+              - .valkey.primary.sidecars
+              - .valkey.primary.initContainers
+              - .valkey.primary.service
+              - .valkey.replica.args
+              - .valkey.replica.automountServiceAccountToken
+              - .valkey.replica.command
+              - .valkey.replica.containerPorts
+              - .valkey.replica.podSecurityContext
+              - .valkey.replica.containerSecurityContext
+              - .valkey.replica.sidecars
+              - .valkey.replica.initContainers
+              - .valkey.replica.service
+              - .valkey.sentinel.args
+              - .valkey.sentinel.automountServiceAccountToken
+              - .valkey.sentinel.command
+              - .valkey.sentinel.containerPorts
+              - .valkey.sentinel.image
+              - .valkey.sentinel.podSecurityContext
+              - .valkey.sentinel.containerSecurityContext
+              - .valkey.sentinel.sidecars
+              - .valkey.sentinel.initContainers
+              - .valkey.sentinel.service
+              - .valkey.metrics.args
+              - .valkey.metrics.automountServiceAccountToken
+              - .valkey.metrics.command
+              - .valkey.metrics.containerPorts
+              - .valkey.metrics.image
+              - .valkey.metrics.containerSecurityContext
+              - .valkey.metrics.service
+              - .valkey.volumePermissions
+              - .valkey.kubectl
