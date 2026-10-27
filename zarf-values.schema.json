@@ -1,123 +1,46 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
-  "description": "Deploy-time values for the Valkey package.",
   "properties": {
     "uds-valkey-config": {
-      "additionalProperties": false,
-      "description": "Deploy-time overrides for the UDS Valkey configuration chart.",
       "properties": {
         "additionalNetworkAllow": {
-          "description": "Additional UDS network-policy allow rules for workloads that need to reach Valkey.",
-          "items": {
-            "properties": {
-              "description": {
-                "type": "string"
-              },
-              "direction": {
-                "enum": [
-                  "Egress",
-                  "Ingress"
-                ],
-                "type": "string"
-              },
-              "port": {
-                "maximum": 65535,
-                "minimum": 1,
-                "type": "integer"
-              },
-              "remoteGenerated": {
-                "type": "string"
-              },
-              "remoteNamespace": {
-                "type": "string"
-              },
-              "remoteSelector": {
-                "type": "object"
-              },
-              "selector": {
-                "type": "object"
-              },
-              "service": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "direction"
-            ],
-            "type": "object"
-          },
           "type": "array"
         },
         "ambient": {
-          "description": "Use ambient service-mesh mode instead of sidecar mode.",
           "type": "boolean"
         },
         "copyPassword": {
-          "additionalProperties": false,
-          "allOf": [
-            {
-              "if": {
-                "properties": {
-                  "enabled": {
-                    "const": true
-                  }
-                },
-                "required": [
-                  "enabled"
-                ]
-              },
-              "then": {
-                "required": [
-                  "namespace",
-                  "secretKey",
-                  "secretName"
-                ]
-              }
-            }
-          ],
-          "description": "Copy the generated Valkey password into another namespace.",
           "properties": {
             "enabled": {
               "type": "boolean"
             },
             "namespace": {
-              "maxLength": 63,
-              "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$",
               "type": "string"
             },
             "secretKey": {
-              "pattern": "^[A-Za-z0-9._-]+$",
               "type": "string"
             },
             "secretName": {
-              "maxLength": 253,
-              "pattern": "^[a-z0-9]([-.a-z0-9]*[a-z0-9])?$",
               "type": "string"
             }
           },
           "type": "object"
         },
         "replicas": {
-          "description": "Number of replicated Valkey nodes for which the UDS chart creates mesh resources.",
-          "minimum": 0,
           "type": "number"
         }
       },
       "type": "object"
     },
     "valkey": {
-      "additionalProperties": false,
-      "description": "Deploy-time overrides for the upstream Valkey chart. Package-owned images, security contexts, injected containers, and helper images are excluded.",
       "properties": {
         "apiVersions": {
           "type": "array"
         },
         "architecture": {
-          "description": "Valkey deployment architecture.",
           "enum": [
-            "replication",
-            "standalone"
+            "standalone",
+            "replication"
           ],
           "type": "string"
         },
@@ -142,7 +65,6 @@
           "type": "string"
         },
         "global": {
-          "additionalProperties": false,
           "properties": {
             "compatibility": {
               "properties": {
@@ -170,7 +92,6 @@
           "type": "string"
         },
         "metrics": {
-          "additionalProperties": false,
           "properties": {
             "customLivenessProbe": {
               "properties": {},
@@ -422,7 +343,6 @@
           "type": "object"
         },
         "primary": {
-          "additionalProperties": false,
           "properties": {
             "affinity": {
               "properties": {},
@@ -662,7 +582,6 @@
               "type": "object"
             },
             "replicaCount": {
-              "minimum": 1,
               "type": "number"
             },
             "resources": {
@@ -740,7 +659,6 @@
           "type": "object"
         },
         "replica": {
-          "additionalProperties": false,
           "properties": {
             "affinity": {
               "properties": {},
@@ -1052,7 +970,6 @@
               "type": "object"
             },
             "replicaCount": {
-              "minimum": 1,
               "type": "integer"
             },
             "resources": {
@@ -1134,7 +1051,6 @@
           "type": "object"
         },
         "sentinel": {
-          "additionalProperties": false,
           "properties": {
             "annotations": {
               "properties": {},
@@ -1159,7 +1075,6 @@
               "type": "object"
             },
             "downAfterMilliseconds": {
-              "minimum": 1,
               "type": "number"
             },
             "enableServiceLinks": {
@@ -1177,8 +1092,6 @@
                   "type": "string"
                 },
                 "port": {
-                  "maximum": 65535,
-                  "minimum": 1,
                   "type": "number"
                 }
               },
@@ -1200,7 +1113,6 @@
               "type": "array"
             },
             "failoverTimeout": {
-              "minimum": 1,
               "type": "number"
             },
             "getPrimaryTimeout": {
@@ -1234,7 +1146,6 @@
               "type": "object"
             },
             "parallelSyncs": {
-              "minimum": 1,
               "type": "number"
             },
             "persistence": {
@@ -1300,7 +1211,6 @@
               "type": "string"
             },
             "quorum": {
-              "minimum": 1,
               "type": "number"
             },
             "readinessProbe": {
