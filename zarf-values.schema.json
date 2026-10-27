@@ -481,6 +481,11 @@
               "type": "array"
             },
             "kind": {
+              "enum": [
+                "Deployment",
+                "StatefulSet",
+                "DaemonSet"
+              ],
               "type": "string"
             },
             "lifecycleHooks": {
@@ -864,6 +869,10 @@
               "type": "array"
             },
             "kind": {
+              "enum": [
+                "DaemonSet",
+                "StatefulSet"
+              ],
               "type": "string"
             },
             "lifecycleHooks": {
@@ -1044,7 +1053,7 @@
             },
             "replicaCount": {
               "minimum": 1,
-              "type": "number"
+              "type": "integer"
             },
             "resources": {
               "properties": {},
