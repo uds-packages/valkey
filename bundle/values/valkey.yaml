@@ -1,0 +1,27 @@
+# Copyright 2026 Defense Unicorns
+# SPDX-License-Identifier: AGPL-3.0-or-later OR LicenseRef-Defense-Unicorns-Commercial
+
+uds-valkey-config:
+  additionalNetworkAllow:
+    - direction: Ingress
+      selector:
+        app.kubernetes.io/name: valkey
+      remoteNamespace: valkey-test
+      remoteSelector:
+        app: valkey-test
+      port: 6379
+      description: Ingress from Valkey CLI (for tests)
+  copyPassword:
+    enabled: true
+    namespace: valkey-test
+    secretName: valkey-standalone
+    secretKey: REDISCLI_AUTH
+valkey:
+  primary:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 300Mi
+      requests:
+        cpu: 100m
+        memory: 300Mi
