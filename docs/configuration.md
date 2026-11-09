@@ -19,6 +19,13 @@ valkey:
     enabled: true
 ```
 
+## Test Bundle Configuration
+
+Tasks default to `NEXT_MODE=true` and use [`bundle/bundle.uds.hcl`](../bundle/bundle.uds.hcl).
+Set package values in [`bundle/values`](../bundle/values).
+
+Set Next variables and options in [`bundle/config.uds.hcl`](../bundle/config.uds.hcl).
+
 ## Networking
 
 Network policies are controlled via the `uds-valkey-config` chart and follow [similar networking patterns as the Reference Package](https://github.com/uds-packages/reference-package/blob/main/docs/networking-patterns.md).  Because Valkey does not interact with external resources like databases or object storage it only implements `additionalNetworkAllow` networking for the `valkey` namespace:
@@ -47,54 +54,29 @@ The default Valkey configuration is a single read/write node, which is sufficien
 
 ### Configuration Changes
 
-The configuration changes required to switch from the standalone to the replicated (with sentinel) architecture can be derived by comparing the two valkey instances in the [test bundle definition](../bundle/uds-bundle.yaml). The changes are as follows:
-
-1. Add an ingress to the sentinel port in the `additionalNetworkAllow` network rules in the `uds-valkey-config` chart. This is unnecessary if not enabling the sentinel later (not recommended).
-
-```yaml
-packages:
-  - name: valkey
-    overrides:
-      valkey:
-        uds-valkey-config:
-          values:
-            - direction: Ingress
-                selector:
-                app.kubernetes.io/name: valkey
-                remoteNamespace: <your application's namespace>
-                remoteSelector:
-                app: <your application's UDS Package app name>
-                port: 26379
-                description: "Ingress from <your application> to sentinel"
-```
-
-2. Set the desired number of `replicas` in the `uds-valkey-config` chart. Note this defaults to zero for the standalone instance in order to prevent the creation of network policies which are only needed to support Valkey's clustering behavior.
+Set the following package values to enable replication with Sentinel, as shown in the
+[replicated test values](../bundle/values/valkey-replicated-w-sentinel.yaml):
 
 ```yaml
-packages:
-  - name: valkey
-    overrides:
-      valkey:
-        uds-valkey-config:
-          values:
-            - path: replicas
-              value: 3
+uds-valkey-config:
+  replicas: 3
+  additionalNetworkAllow:
+    - direction: Ingress
+      selector:
+        app.kubernetes.io/name: valkey
+      remoteNamespace: <your application's namespace>
+      remoteSelector:
+        app: <your application's UDS Package app name>
+      port: 26379
+      description: "Ingress from your application to Sentinel"
+valkey:
+  architecture: replication
+  sentinel:
+    enabled: true
 ```
 
-3. Set the [`architecture` variable in the upstream valkey chart](https://github.com/bitnami/charts/blob/main/bitnami/valkey/values.yaml#L128) to `replication` and turn on the sentinel (recommended).
-
-```yaml
-packages:
-  - name: valkey
-    overrides:
-      valkey:
-        valkey:
-          values:
-            - path: architecture
-              value: replication
-            - path: sentinel.enabled
-              value: true
-```
+Keep the client's existing ingress rule for port `6379` alongside the Sentinel rule.
+The `replicas` value defaults to zero for standalone deployments to avoid creating clustering network policies.
 
 ### Impacts
 
