@@ -2,6 +2,47 @@
 
 Valkey configured through the upstream [Bitnami Valkey chart](https://github.com/bitnami/charts/tree/main/bitnami/valkey) as well as a UDS configuration chart that supports the following:
 
+## Table of Contents
+
+- [Package Signature Verification](#package-signature-verification)
+- [Zarf Values](#zarf-values)
+- [Test Bundle Configuration](#test-bundle-configuration)
+- [Networking](#networking)
+- [Cross-Namespace Password](#cross-namespace-password)
+- [Redis URI Output](#redis-uri-output)
+- [High Availability](#high-availability)
+
+## Package Signature Verification
+
+See [Verify a Package](../README.md#verify-a-package) in the README for the first signed releases and package source paths. Replace `<version>` and `<flavor>` with your package version and flavor. For signed releases, configure the settings below to avoid signature verification failures during bundle creation.
+
+### CLI Next — `bundle.uds.hcl`
+
+```hcl
+package "valkey" {
+  source = "oci://ghcr.io/uds-packages/valkey:<version>-<flavor>"
+
+  signature_verification {
+    keyless {
+      certificate_identity    = "https://github.com/uds-packages/valkey/.github/workflows/release.yaml@refs/heads/main"
+      certificate_oidc_issuer = "https://token.actions.githubusercontent.com"
+    }
+  }
+}
+```
+
+### Classic — `uds-bundle.yaml`
+
+```yaml
+packages:
+  - name: valkey
+    repository: ghcr.io/uds-packages/valkey
+    ref: <version>-<flavor>
+    keylessVerification:
+      certificateIdentity: https://github.com/uds-packages/valkey/.github/workflows/release.yaml@refs/heads/main
+      certificateOIDCIssuer: https://token.actions.githubusercontent.com
+```
+
 ## Zarf Values
 
 This package supports deploy-time [Zarf Values](https://docs.defenseunicorns.com/core/concepts/configuration--packaging/package-values/). Supply a values file with `uds zarf package deploy --values <file>` or individual settings with `--set-values`.
